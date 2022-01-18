@@ -2,13 +2,12 @@ package com.mempoolrecorder.bitcoindadapter.entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Document(collection = "txs")
 public class Transaction {
@@ -21,24 +20,12 @@ public class Transaction {
 	@Transient
 	private Fees fees;
 	private Long timeInSecs;// Epoch time in seconds since the transaction entered in mempool (set by
-							// bitcoind).
+	// bitcoind).
 	// BE CAREFUL: THIS FIELD MUST KEPT UPDATED, COULD CHANGE ONCE RECEIVED!!!!
 	@Transient
 	private TxAncestry txAncestry;
 	private Boolean bip125Replaceable;
 	private String hex;// Raw transaction in hexadecimal
-
-	/**
-	 * Returns all addresses involved in this transaction, address in inputs,
-	 * outputs and duplicated.
-	 * 
-	 */
-	public List<String> listAddresses() {
-		List<String> txInputsAddresses = txInputs.stream().map(txInput -> txInput.getAddressIds())
-				.flatMap(addresses -> addresses.stream()).collect(Collectors.toList());
-		return txOutputs.stream().map(txOutput -> txOutput.getAddressIds()).flatMap(addresses -> addresses.stream())
-				.collect(Collectors.toCollection(() -> txInputsAddresses));
-	}
 
 	// Be carefull because tx.getSatvByteIncludingAncestors could not be coherent
 	// with tx.getSatvByte since one is calculated using vSize(a rounded up integer)
