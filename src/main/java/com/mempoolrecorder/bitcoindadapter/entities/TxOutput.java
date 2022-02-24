@@ -1,15 +1,12 @@
 package com.mempoolrecorder.bitcoindadapter.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TxOutput {
 	private String address;// Can be null
 	private Long amount;// In Satoshis.
 	private Integer index;// Begins in 0
 
 	public void setAddress(String address) {
-		this.address= address;
+		this.address = address;
 	}
 
 	public void setAmount(Long amount) {

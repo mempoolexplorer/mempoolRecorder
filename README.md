@@ -1,3 +1,5 @@
+# This is an abandoned project. 
+# See https://github.com/mempoolexplorer/mempool-explorer-back for a self-hosted version.
 # MempoolRecorder
 
 This is a spring boot server to store in a mongo DB incoming blocks and the state of bitcoind mempool when a block is mined.
